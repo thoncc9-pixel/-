@@ -1,0 +1,17 @@
+
+{
+  "name": "tiktok-siri-saas",
+  "version": "1.0.0",
+  "description": "TikTok Live Comment Reader SaaS Prototype",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "tiktok-live-connector": "^1.0.0",
+    "ws": "^8.13.0",
+    "uuid": "^9.0.0",
+    "express-rate-limit": "^7.0.0"
+  }
+}
