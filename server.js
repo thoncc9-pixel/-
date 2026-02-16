@@ -1,4 +1,3 @@
-
 const express = require("express");
 const http = require("http");
 const WebSocket = require("ws");
@@ -7,6 +6,10 @@ const { v4: uuidv4 } = require("uuid");
 const rateLimit = require("express-rate-limit");
 
 const app = express();
+
+/* ✅ สำคัญมาก สำหรับ Render */
+app.set("trust proxy", 1);
+
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
@@ -79,7 +82,6 @@ app.post("/connect", async (req, res) => {
         await tiktok.connect();
 
         tiktok.on("chat", data => {
-
             const now = Date.now();
 
             if (now - sessions[sessionId].lastMessageTime < 800) {
@@ -103,6 +105,7 @@ app.post("/connect", async (req, res) => {
         res.json({ success: true });
 
     } catch (err) {
+        console.error(err);
         res.status(500).json({ error: "Connect failed" });
     }
 });
@@ -110,5 +113,5 @@ app.post("/connect", async (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, "0.0.0.0", () => {
-    console.log("Server running");
+    console.log("Server running on port", PORT);
 });
