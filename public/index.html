@@ -130,26 +130,15 @@ button:active{
 <script>
 let sessionId = null;
 
-const ws = new WebSocket(`ws://${location.host}`);
+const protocol = location.protocol === "https:" ? "wss:" : "ws:";
+const ws = new WebSocket(`${protocol}//${location.host}`);
 
 ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
 
-    if(data.type === "session"){
+    if (data.type === "session") {
         sessionId = data.sessionId;
-    }
-
-    if(data.type === "chat"){
-        const commentBox = document.getElementById("comments");
-
-        const div = document.createElement("div");
-        div.className = "comment";
-        div.innerText = data.message;
-
-        commentBox.appendChild(div);
-        commentBox.scrollTop = commentBox.scrollHeight;
-
-        speak(data.message);
+        console.log("Session received:", sessionId);
     }
 };
 
